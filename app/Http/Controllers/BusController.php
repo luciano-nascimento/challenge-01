@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\File;
 use Orchestra\Parser\Xml\Facade as XmlParser;
@@ -15,17 +16,21 @@ class BusController extends Controller
         ]);
 
         if ($request->hasFile('xmlfile')) {
-            $fileName = time().'.'.$request->file('xmlfile')->extension();
-            $xmlData = $request->file('xmlfile');
-            $xmlDataParsed = new \SimpleXMLElement($xmlData->getContent());
+            $fileName = (string) Str::uuid().'.'.$request->file('xmlfile')->extension();
+            $upload = $request->xmlfile->storeAs('temp-bus-xml-files', $fileName);
+            
+            //$xmlData = $request->file('xmlfile');
+            //$xmlDataParsed = new \SimpleXMLElement($xmlData->getContent());
 
-            foreach ($xmlDataParsed as $key => $data) {
-                if($key === 'person') {
-                    //todo
-                } else if ($key === 'shiporder') {
-                    //todo
-                }
-            }
+            // foreach ($xmlDataParsed as $key => $data) {
+            //     if($key === 'person') {
+            //         //todo
+            //     } else if ($key === 'shiporder') {
+            //         //todo
+            //     }
+            // }
+
+
 
             return back()
                 ->with('success','upload completed !')

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shiporders>
+	<shiporder>
+	  <orderid>1</orderid>
+	  <orderperson>1</orderperson>
+	  <shipto>
+		<name>Name 1</name>
+		<address>Address 1</address>
+		<city>City 1</city>
+		<country>Country 1</country>
+	  </shipto>
+	  <items>
+		  <item>
+			<title>Title 1</title>
+			<note>Note 1</note>
+			<quantity>745</quantity>
+			<price>123.45</price>
+		  </item>
+	  </items>
+	</shiporder>
+	<shiporder>
+	  <orderid>2</orderid>
+	  <orderperson>2</orderperson>
+	  <shipto>
+		<name>Name 2</name>
+		<address>Address 2</address>
+		<city>City 2</city>
+		<country>Country 2</country>
+	  </shipto>
+	  <items>
+		  <item>
+			<title>Title 2</title>
+			<note>Note 2</note>
+			<quantity>45</quantity>
+			<price>13.45</price>
+		  </item>
+	  </items>
+	</shiporder>
+	<shiporder>
+	  <orderid>3</orderid>
+	  <orderperson>3</orderperson>
+	  <shipto>
+		<name>Name 3</name>
+		<address>Address 3</address>
+		<city>City 3</city>
+		<country>Country 3</country>
+	  </shipto>
+	  <items>
+		  <item>
+			<title>Title 3</title>
+			<note>Note 3</note>
+			<quantity>5</quantity>
+			<price>1.12</price>
+		  </item>
+		  <item>
+			<title>Title 4</title>
+			<note>Note 4</note>
+			<quantity>2</quantity>
+			<price>77.12</price>
+		  </item>
+	  </items>
+	</shiporder>
+</shiporders>

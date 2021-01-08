@@ -1,0 +1,49 @@
+2021-01-08 03:49:18,504 INFO supervisord started with pid 1
+2021-01-08 03:49:19,508 INFO spawned: 'laravel-worker_00' with pid 8
+2021-01-08 03:49:19,513 INFO spawned: 'laravel-worker_01' with pid 9
+2021-01-08 03:49:19,515 INFO spawned: 'laravel-worker_02' with pid 10
+2021-01-08 03:49:19,516 INFO spawned: 'laravel-worker_03' with pid 11
+2021-01-08 03:49:19,518 INFO spawned: 'laravel-worker_04' with pid 12
+2021-01-08 03:49:19,519 INFO spawned: 'phpfpm_04' with pid 13
+2021-01-08 03:49:19,521 INFO spawned: 'phpfpm_03' with pid 14
+2021-01-08 03:49:19,522 INFO spawned: 'phpfpm_02' with pid 15
+2021-01-08 03:49:19,524 INFO spawned: 'phpfpm_01' with pid 16
+2021-01-08 03:49:19,525 INFO spawned: 'phpfpm_00' with pid 17
+2021-01-08 03:49:19,611 INFO exited: phpfpm_03 (exit status 78; not expected)
+2021-01-08 03:49:19,613 INFO exited: phpfpm_02 (exit status 78; not expected)
+2021-01-08 03:49:19,615 INFO exited: phpfpm_04 (exit status 78; not expected)
+2021-01-08 03:49:19,618 INFO exited: phpfpm_00 (exit status 78; not expected)
+2021-01-08 03:49:20,619 INFO success: laravel-worker_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2021-01-08 03:49:20,620 INFO success: laravel-worker_01 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2021-01-08 03:49:20,620 INFO success: laravel-worker_02 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2021-01-08 03:49:20,621 INFO success: laravel-worker_03 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2021-01-08 03:49:20,621 INFO success: laravel-worker_04 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2021-01-08 03:49:20,623 INFO spawned: 'phpfpm_04' with pid 50
+2021-01-08 03:49:20,625 INFO spawned: 'phpfpm_03' with pid 51
+2021-01-08 03:49:20,628 INFO spawned: 'phpfpm_02' with pid 52
+2021-01-08 03:49:20,628 INFO success: phpfpm_01 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2021-01-08 03:49:20,630 INFO spawned: 'phpfpm_00' with pid 53
+2021-01-08 03:49:20,674 INFO exited: phpfpm_04 (exit status 78; not expected)
+2021-01-08 03:49:20,679 INFO exited: phpfpm_03 (exit status 78; not expected)
+2021-01-08 03:49:20,683 INFO exited: phpfpm_02 (exit status 78; not expected)
+2021-01-08 03:49:20,683 INFO exited: phpfpm_00 (exit status 78; not expected)
+2021-01-08 03:49:22,688 INFO spawned: 'phpfpm_04' with pid 54
+2021-01-08 03:49:22,692 INFO spawned: 'phpfpm_03' with pid 55
+2021-01-08 03:49:22,697 INFO spawned: 'phpfpm_02' with pid 56
+2021-01-08 03:49:22,701 INFO spawned: 'phpfpm_00' with pid 57
+2021-01-08 03:49:22,747 INFO exited: phpfpm_04 (exit status 78; not expected)
+2021-01-08 03:49:22,750 INFO exited: phpfpm_03 (exit status 78; not expected)
+2021-01-08 03:49:22,750 INFO exited: phpfpm_02 (exit status 78; not expected)
+2021-01-08 03:49:22,756 INFO exited: phpfpm_00 (exit status 78; not expected)
+2021-01-08 03:49:25,762 INFO spawned: 'phpfpm_04' with pid 58
+2021-01-08 03:49:25,767 INFO spawned: 'phpfpm_03' with pid 59
+2021-01-08 03:49:25,771 INFO spawned: 'phpfpm_02' with pid 60
+2021-01-08 03:49:25,775 INFO spawned: 'phpfpm_00' with pid 61
+2021-01-08 03:49:25,821 INFO exited: phpfpm_04 (exit status 78; not expected)
+2021-01-08 03:49:25,827 INFO gave up: phpfpm_04 entered FATAL state, too many start retries too quickly
+2021-01-08 03:49:25,829 INFO exited: phpfpm_03 (exit status 78; not expected)
+2021-01-08 03:49:25,830 INFO gave up: phpfpm_03 entered FATAL state, too many start retries too quickly
+2021-01-08 03:49:25,831 INFO exited: phpfpm_02 (exit status 78; not expected)
+2021-01-08 03:49:25,832 INFO gave up: phpfpm_02 entered FATAL state, too many start retries too quickly
+2021-01-08 03:49:25,832 INFO exited: phpfpm_00 (exit status 78; not expected)
+2021-01-08 03:49:26,833 INFO gave up: phpfpm_00 entered FATAL state, too many start retries too quickly

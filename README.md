@@ -17,7 +17,7 @@ $ docker-compose up -d
 
 - then run migration   
 ```sh
-docker-compose exec app-php> php artisan migrate
+docker-compose exec app-php php artisan migrate
 ```
 <br/>
 

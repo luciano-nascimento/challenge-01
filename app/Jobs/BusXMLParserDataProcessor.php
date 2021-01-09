@@ -8,11 +8,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Http\Services\BusService;
-use App\Http\Services\PeopleService;
-use App\Http\Services\ShiporderService;
-use App\Http\Repositories\ShiporderRepository;
-use App\Http\Repositories\PeopleRepository;
+use App\Services\UploadService;
+use App\Services\PeopleService;
+use App\Services\ShiporderService;
+use App\Repositories\ShiporderRepository;
+use App\Repositories\PeopleRepository;
 use App\Models\Shiporder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -43,12 +43,12 @@ class BusXMLParserDataProcessor implements ShouldQueue
     public function handle()
     {
         //should be dependency injection, but is causing max nesting level error, it deserves refac
-        $busService = new BusService(new PeopleService(new PeopleRepository (new People)), new ShiporderService(new ShiporderRepository(new Shiporder)));
+        $uploadService = new UploadService(new PeopleService(new PeopleRepository (new People)), new ShiporderService(new ShiporderRepository(new Shiporder)));
 
         try {
             $data = Storage::get($this->filePath);
             if($data){
-                $busService->dispatchData(null, $data, false);
+                $uploadService->dispatchData(null, $data, false);
                 Storage::delete($this->filePath);
                 //at this point is possible to send email to confirm a processing or whatever
             } else {

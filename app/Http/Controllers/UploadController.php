@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Http\Services\BusService;
+use App\Services\UploadService;
 use Illuminate\Support\Str;
 
 
-class BusController extends Controller
+class UploadController extends Controller
 {
     
-    private $busService;
+    private $uploadService;
 
-    public function __construct(BusService $busService)
+    public function __construct(UploadService $uploadService)
     {
-        $this->busService = $busService;
+        $this->uploadService = $uploadService;
     }
     /**
      * @OA\Get(
@@ -39,10 +39,13 @@ class BusController extends Controller
         if ($request->hasFile('xmlfile')) {
             $xmlData = $request->file('xmlfile');
             $xmlDataContent = $xmlData->getContent();
-            $this->busService->dispatchData($fileName, $xmlDataContent, $isAsyncUpload);            
-
+            $success = $this->uploadService->dispatchData($fileName, $xmlDataContent, $isAsyncUpload);            
+            $message = 'upload completed, but processing failed.';
+            if($success){
+                $message = 'upload completed !';
+            }
             return back()
-                ->with('success','upload completed !')
+                ->with('success',$message)
                 ->with('file',$fileName);
         }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
 use App\Models\Shiporder;
 use App\Models\ShipItem;
-use App\Http\Repositories\ShiporderRepository;
+use App\Repositories\ShiporderRepository;
 use \App\Jobs\BusXMLParserDataProcessor;
 
 class ShiporderService {
@@ -18,16 +18,18 @@ class ShiporderService {
 
     public function store($filename, $data, $isAsyncUpload = false)
     {
+        $success = false;
         if($isAsyncUpload) {
-            $this->storeAsync($data, $filename);
+            $success = $this->storeAsync($data, $filename);
         } else {
-            $this->storeNonAsync(convertXMLDataTypeToArray($data));
+            $success = $this->storeNonAsync(convertXMLDataTypeToArray($data));
         }
-        return true;
+        return $success;
     }
 
     function storeNonAsync($data) 
     {
+        $success = false;
         foreach ($data as $shiporderData) {
             $shiporder = new Shiporder;
             $shiporder->order_id = $shiporderData['orderid'];
@@ -56,20 +58,24 @@ class ShiporderService {
                     $item->note = $itemsData[$i]['note'];
                     $item->quantity = $itemsData[$i]['quantity'];
                     $item->price = $itemsData[$i]['price']; 
-                    $item->save();
+                    $success = $item->save();
                 }
             }
         }
+        return $success;
     }
 
     function storeAsync($data, $fileName) 
     {
+        $success = false;
         $folder = Config('constants.xml_paths.shiporder_xml_file_path');
         $success = $this->shiporderRepository->storeFile($data, $fileName);
         if($success){
             BusXMLParserDataProcessor::dispatch($folder.'/'.$fileName);
+            $success = true;
         } else {
             //log
         }
+        return $success;
     }
 }

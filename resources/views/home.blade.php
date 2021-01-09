@@ -34,7 +34,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class='col-md-10'>

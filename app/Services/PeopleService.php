@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
 use App\Models\People;
 use App\Models\Phone;
-use App\Http\Repositories\PeopleRepository;
+use App\Repositories\PeopleRepository;
 use \App\Jobs\BusXMLParserDataProcessor;
 
 class PeopleService {
@@ -18,18 +18,18 @@ class PeopleService {
 
     public function store($filename, $data, $isAsyncUpload = false)
     {
+        $success = false;
         if($isAsyncUpload) {
-            $this->storeAsync($data, $filename);
+            $success = $this->storeAsync($data, $filename);
         } else {
-            $this->storeNonAsync(convertXMLDataTypeToArray($data));
+            $success = $this->storeNonAsync(convertXMLDataTypeToArray($data));
         }
-        return true;
-        
-        
+        return $success;
     }
 
     function storeNonAsync($data) 
     {
+        $success = false;
         foreach ($data as $peopleData) {
             $people_id = $peopleData['personid'];
             $name = $peopleData['personname'];
@@ -50,15 +50,17 @@ class PeopleService {
                 $phone = new Phone;
                 $phone->number = $phones;
                 $phone->people_id = $people->id;
-                $phone->save();
+                $success = $phone->save();
             } else {
                 //todo logs
             }
         }
+        return $success;
     }
 
     function storeAsync($data, $fileName) 
     {
+        $success = false;
         $folder = Config('constants.xml_paths.people_xml_file_path');
         $success = $this->peopleRepository->storeFile($data, $fileName);
         if($success){
@@ -66,5 +68,6 @@ class PeopleService {
         } else {
             //log
         }
+        return $success;
     }
 }

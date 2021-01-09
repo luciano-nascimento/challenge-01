@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BusController;
+use App\Http\Controllers\UploadController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::post('file-upload', [BusController::class, 'store'])->name('file.upload');
+Route::post('upload', [UploadController::class, 'store'])->name('upload');

@@ -4,17 +4,31 @@ namespace App\Http\Services;
 
 use App\Models\People;
 use App\Models\Phone;
+use App\Http\Repositories\PeopleRepository;
+use \App\Jobs\BusXMLParserDataProcessor;
 
 class PeopleService {
     
     private $peopleRepository;
 
-    // public function __construct(PeopleRepository $peopleRepository)
-    // {
-    //     $this->peopleRepository = $peopleRepository;
-    // }
+    public function __construct(PeopleRepository $peopleRepository)
+    {
+        $this->peopleRepository = $peopleRepository;
+    }
 
-    public function store($data)
+    public function store($filename, $data, $isAsyncUpload = false)
+    {
+        if($isAsyncUpload) {
+            $this->storeAsync($data, $filename);
+        } else {
+            $this->storeNonAsync(convertXMLDataTypeToArray($data));
+        }
+        return true;
+        
+        
+    }
+
+    function storeNonAsync($data) 
     {
         foreach ($data as $peopleData) {
             $people_id = $peopleData['personid'];
@@ -40,6 +54,17 @@ class PeopleService {
             } else {
                 //todo logs
             }
+        }
+    }
+
+    function storeAsync($data, $fileName) 
+    {
+        $folder = Config('constants.xml_paths.people_xml_file_path');
+        $success = $this->peopleRepository->storeFile($data, $fileName);
+        if($success){
+            BusXMLParserDataProcessor::dispatch($folder.'/'.$fileName);
+        } else {
+            //log
         }
     }
 }

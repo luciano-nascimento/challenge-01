@@ -19,12 +19,14 @@ class CreateShipordersTable extends Migration
             //avoid create relationship to persons table, because maybe we receive
             //order first then person
             $table->unsignedBigInteger('people_id');
+            //address in same table because it has just one address
             $table->string('shipto_name', 60);
             $table->string('shipto_address', 100);
             $table->string('shipto_city', 50);
             $table->string('shipto_country', 30);
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['order_id']);
         });
     }
 

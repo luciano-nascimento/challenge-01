@@ -19,6 +19,7 @@ class CreatePeopleTable extends Migration
             $table->string('name', 60);
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['people_id']);
         });
     }
 

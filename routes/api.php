@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BusController;
 
 
-Route::get('person', [BusController::class, 'index']);
-Route::get('person', [BusController::class, 'show']);
+// Route::get('bus-c', [BusController::class, 'index']);
+// Route::get('person', [BusController::class, 'show']);
 
-Route::get('shiporder', [BusController::class, 'index']);
-Route::get('shiporder', [BusController::class, 'show']);
+// Route::get('shiporder', [BusController::class, 'index']);
+// Route::get('shiporder', [BusController::class, 'show']);
 

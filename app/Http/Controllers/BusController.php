@@ -2,56 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
+
 use Illuminate\Http\Request;
-use App\Models\File;
-use App\Models\People;
-use App\Models\Phone;
-use App\Models\Shiporder;
-use App\Models\ShipItem;
-use App\Http\Strategies\BusXMLParser\PersonBusXMLParser;
-use App\Http\Strategies\BusXMLParser\ShiporderBusXMLParser;
-use App\Http\Strategies\BusXMLParser\BusXMLParser;
-use App\Http\Services\ShiporderService;
-use App\Http\Services\PeopleService;
+use App\Http\Services\BusService;
+use Illuminate\Support\Str;
+
 
 class BusController extends Controller
 {
-    protected $shiporderService;
-    protected $peopleService;
+    
+    private $busService;
 
-    public function __construct(ShiporderService $shiporderService, PeopleService $peopleService)
+    public function __construct(BusService $busService)
     {
-        $this->shiporderService = $shiporderService;
-        $this->peopleService = $peopleService;
+        $this->busService = $busService;
     }
-
+    /**
+     * @OA\Get(
+     *     path="/projects",
+     *     @OA\Response(response="200", description="Display a listing of projects.")
+     * )
+     */
     public function store(Request $request) {
-
+        
         $request->validate([
             'xmlfile' => 'required|mimes:application/xml,xml|max:10000'
         ]);
 
+        $isAsyncUpload = false;  
+        if($request->has('async')){
+            $isAsyncUpload = true;
+        }
+
+        $fileName = (string) Str::uuid().'.'. $request->file('xmlfile')->extension();
+
         if ($request->hasFile('xmlfile')) {
-            $fileName = (string) Str::uuid().'.'.$request->file('xmlfile')->extension();
-            $upload = $request->xmlfile->storeAs('temp-bus-xml-files', $fileName);
-            
             $xmlData = $request->file('xmlfile');
             $xmlDataContent = $xmlData->getContent();
-            $dataType = getXMLDataType($xmlDataContent);
-            $data = convertXMLDataTypeToArray($xmlDataContent);
-
-
-            if($dataType === 'person') {
-                $this->peopleService->store($data);
-            } else if ($dataType === 'shiporder') {
-                $this->shiporderService->store($data);
-            }
+            $this->busService->dispatchData($fileName, $xmlDataContent, $isAsyncUpload);            
 
             return back()
                 ->with('success','upload completed !')
                 ->with('file',$fileName);
         }
+
+        return back()
+                ->with('failed','invalid file');
 
         
     }

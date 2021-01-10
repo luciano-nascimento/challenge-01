@@ -18,7 +18,7 @@ class CreateShipItemsTable extends Migration
             $table->unsignedBigInteger('shiporder_id');
             $table->string('title', 60);
             $table->string('note', 60);
-            $table->string('quantity', 60);
+            $table->integer('quantity');
             $table->unsignedDecimal('price', 10, 2);
             $table->foreign('shiporder_id')->references('id')->on('shiporders');
             $table->timestamps();

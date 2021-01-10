@@ -5,12 +5,390 @@
         "version": "0.1"
     },
     "paths": {
-        "/projects": {
+        "/api/people": {
             "get": {
-                "operationId": "App\\Http\\Controllers\\BusController::store",
+                "tags": [
+                    "People"
+                ],
+                "summary": "Return people data",
+                "operationId": "getAll",
                 "responses": {
                     "200": {
-                        "description": "Display a listing of projects."
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "phone": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "number": {
+                                                                    "type": "string",
+                                                                    "example": "2345678"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/people/{peopleId}": {
+            "get": {
+                "tags": [
+                    "People"
+                ],
+                "summary": "Return people data by id",
+                "operationId": "getById",
+                "parameters": [
+                    {
+                        "name": "peopleId",
+                        "in": "path",
+                        "description": " people id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "phone": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "number": {
+                                                                "type": "string",
+                                                                "example": "7777777"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad parameter.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "message": {
+                                            "properties": {
+                                                "shiporder_id": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/shiporder": {
+            "get": {
+                "tags": [
+                    "Shiporder"
+                ],
+                "summary": "Return shiporder data",
+                "operationId": "getAll",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "people_id": {
+                                                        "type": "string",
+                                                        "example": "1"
+                                                    },
+                                                    "shipto_name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "shipto_address": {
+                                                        "type": "string",
+                                                        "example": "stree x"
+                                                    },
+                                                    "shipto_city": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "shipto_country": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "ship_item": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "string",
+                                                                    "example": "1"
+                                                                },
+                                                                "shiporder_id": {
+                                                                    "type": "string",
+                                                                    "example": "1"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string",
+                                                                    "example": "tile"
+                                                                },
+                                                                "note": {
+                                                                    "type": "string",
+                                                                    "example": "note"
+                                                                },
+                                                                "quantity": {
+                                                                    "type": "integer",
+                                                                    "example": "2345678"
+                                                                },
+                                                                "price": {
+                                                                    "type": "decimal",
+                                                                    "example": "10.1"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "people": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/shiporder/{shiporderId}": {
+            "get": {
+                "tags": [
+                    "Shiporder"
+                ],
+                "summary": "Return shiporder data by id",
+                "operationId": "getById",
+                "parameters": [
+                    {
+                        "name": "shiporderId",
+                        "in": "path",
+                        "description": " shiporder id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "people_id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "shipto_name": {
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "shipto_address": {
+                                                    "type": "string",
+                                                    "example": "stree x"
+                                                },
+                                                "shipto_city": {
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "shipto_country": {
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "ship_item": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "shiporder_id": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "tile"
+                                                            },
+                                                            "note": {
+                                                                "type": "string",
+                                                                "example": "note"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer",
+                                                                "example": "2345678"
+                                                            },
+                                                            "price": {
+                                                                "type": "decimal",
+                                                                "example": "10.1"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "people": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad parameter.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "message": {
+                                            "properties": {
+                                                "shiporder_id": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
                     }
                 }
             }

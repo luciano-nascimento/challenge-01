@@ -3,9 +3,15 @@
 if (!function_exists('getXMLDataType')) {
     function getXMLDataType($xmldata) 
     {
-        $xmlDataParsed = new \SimpleXMLElement($xmldata);
-        $dataConverted = json_decode(json_encode($xmlDataParsed), true);
-        return array_key_first($dataConverted);
+        try{
+            
+            $xmlDataParsed = new \SimpleXMLElement($xmldata);
+            $dataConverted = json_decode(json_encode($xmlDataParsed), true);
+            return array_key_first($dataConverted);
+        } catch(Exception $e) {
+            return false;
+        }
+        
     }
 }
 

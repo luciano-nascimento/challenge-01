@@ -46,11 +46,11 @@ class ShiporderRepository
 
     public function getAll()
     {
-        return Shiporder::with('shipItem')->get();
+        return Shiporder::with('shipItem')->with('people')->get();
     }
 
     public function getById($shiporderId)
     {
-        return Shiporder::with('shipItem')->find($shiporderId);
+        return Shiporder::with('shipItem')->with('people')->find($shiporderId);
     }
 }

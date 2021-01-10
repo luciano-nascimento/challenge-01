@@ -30,4 +30,9 @@ class Shiporder extends Model
     {
         return $this->hasMany('App\Models\ShipItem');
     }
+
+    public function people()
+    {
+        return $this->belongsTo('App\Models\People');
+    }
 }

@@ -17,12 +17,7 @@ class UploadController extends Controller
     {
         $this->uploadService = $uploadService;
     }
-    /**
-     * @OA\Get(
-     *     path="/projects",
-     *     @OA\Response(response="200", description="Display a listing of projects.")
-     * )
-     */
+
     public function store(Request $request) {
         
         $request->validate([

@@ -85,7 +85,7 @@ class PeopleService {
     public function getById($peopleId)
     {
         $validator = Validator::make(['shiporder_id' => $peopleId], ['shiporder_id' => 'numeric|required']);
-        $this->peopleRepository->getById($peopleId);
+        $data = $this->peopleRepository->getById($peopleId);
         return ['data' => $data ?? '', 'message' => $validator->fails() ? $validator->errors() : ''];
     }
 }

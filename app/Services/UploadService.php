@@ -11,6 +11,9 @@ class UploadService
     private $xmlStoreShiporder;
     private $xmlStorePeople;
 
+    const PERSON_TYPE = 'person';
+    const SHIPORDER = 'shiporder';
+
     public function __construct(XMLStoreShiporder $xmlStoreShiporder, XMLStorePeople $xmlStorePeople) 
     {
         $this->xmlStoreShiporder = $xmlStoreShiporder;
@@ -19,16 +22,20 @@ class UploadService
 
     public function dispatchData($filename, $data, $isAsyncUpload) {
         $xmlDataType = getXMLDataType($data);
+        //is valid file ?
+        if(!$xmlDataType){
+            return false;
+        }
         $service = $this->getXMLStoreStrategy($xmlDataType);
         return $service->store($filename, $data, $isAsyncUpload);
     }
 
     public function getXMLStoreStrategy($xmlDataType)
     {
-        if($xmlDataType === 'person') {
+        if($xmlDataType === self::PERSON_TYPE) {
             return $this->xmlStorePeople;
 
-        } else if ($xmlDataType === 'shiporder') {
+        } else if ($xmlDataType === self::SHIPORDER) {
             return $this->xmlStoreShiporder;
         }
     }

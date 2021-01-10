@@ -15,11 +15,10 @@ class CreatePeopleTable extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('people_id');
             $table->string('name', 60);
             $table->timestamps();
             $table->softDeletes();
-            $table->index(['people_id']);
+            $table->index(['id']);
         });
     }
 

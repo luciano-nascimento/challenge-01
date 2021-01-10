@@ -18,12 +18,17 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use App\Models\People;
 
+use App\Strategies\XMLStore\XMLStoreShiporder;
+use App\Strategies\XMLStore\XMLStorePeople;
+
 class BusXMLParserDataProcessor implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     
     public $tries = 3;
     private $filePath;
+    private $xmlStoreShiporder;
+    private $xmlStorePeople;
     
     /**
      * Create a new job instance.
@@ -33,6 +38,8 @@ class BusXMLParserDataProcessor implements ShouldQueue
     public function __construct($filePath)
     {
         $this->filePath = $filePath;
+        $this->xmlStoreShiporder = new XMLStoreShiporder(new ShiporderService(new ShiporderRepository(new Shiporder)));
+        $this->xmlStorePeople = new XMLStorePeople(new PeopleService(new PeopleRepository (new People)));
     }
 
     /**
@@ -42,9 +49,7 @@ class BusXMLParserDataProcessor implements ShouldQueue
      */
     public function handle()
     {
-        //should be dependency injection, but is causing max nesting level error, it deserves refac
-        $uploadService = new UploadService(new PeopleService(new PeopleRepository (new People)), new ShiporderService(new ShiporderRepository(new Shiporder)));
-
+        $uploadService = new UploadService($this->xmlStoreShiporder, $this->xmlStorePeople);
         try {
             $data = Storage::get($this->filePath);
             if($data){

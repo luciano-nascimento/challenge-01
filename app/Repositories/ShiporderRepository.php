@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Shiporder;
 use Illuminate\Support\Facades\Storage;
 use Config;
+use App\Models\People;
+use Illuminate\Support\Facades\Log;
 
 class ShiporderRepository
 {
@@ -22,8 +24,23 @@ class ShiporderRepository
         return Storage::put($folder.'/'.$filename, $data);
     }
 
-    function store(Shiporder $shiporder) 
+    function store($data) 
     {
-        return $shiporder->save();
+        
+        $peopleExists = People::find($data['people_id']);
+        if($peopleExists){
+            return Shiporder::create([
+                'id' => $data['id'],
+                'people_id' => $data['people_id'],
+                'shipto_name' => $data['shipto_name'],
+                'shipto_address' => $data['shipto_address'],
+                'shipto_city' => $data['shipto_city'],
+                'shipto_country' => $data['shipto_country']
+            ]);
+        } else {
+            Log::error('Can not store ship order because this person id do not exists.');
+        }
+
+        return false;
     }
 }

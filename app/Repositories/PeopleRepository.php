@@ -22,8 +22,11 @@ class PeopleRepository
         return Storage::put($folder.'/'.$filename, $data);
     }
 
-    function store(People $people) 
+    function store($people) 
     {
-        return $people->save();
+        return People::firstOrcreate([
+            'id' => $people['id'],
+            'name' => $people['name']
+        ]);
     }
 }

@@ -11,7 +11,7 @@ class UploadService
     private $xmlStoreShiporder;
     private $xmlStorePeople;
 
-    function __construct(XMLStoreShiporder $xmlStoreShiporder, XMLStorePeople $xmlStorePeople) 
+    public function __construct(XMLStoreShiporder $xmlStoreShiporder, XMLStorePeople $xmlStorePeople) 
     {
         $this->xmlStoreShiporder = $xmlStoreShiporder;
         $this->xmlStorePeople = $xmlStorePeople;

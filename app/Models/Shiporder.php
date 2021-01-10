@@ -12,8 +12,8 @@ class Shiporder extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'order_id',
-        'person_id',
+        'id',
+        'people_id',
         'shipto_name',
         'shipto_address',
         'shipto_city',

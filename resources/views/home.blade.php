@@ -10,19 +10,23 @@
     <div class="panel panel-primary">
       <div class="py-5 text-center">
         <h2>XML Data Processor</h2>
-        <p class="lead">Choose a xml file and upload it, also is possible to choose if the file will be processed asynchronously, clicking in checkbox below.</p>
+        <p class="lead">Choose a xml file for person data or ship order data and upload it, also is possible to choose if the file will be processed asynchronously, clicking in checkbox below. Data will be processed and made available in the rest api. <p class="font-weight-bold font-italic">To work properly fisrt upload person file to avoid inconsistency data on database.</p></p>
       </div>
       <div class="panel-body">
-        @if (Session::get('success') && Session::get('file'))
-        <div class="alert alert-success alert-block">
-            <strong>{{ Session::get('success') }}</strong>
-            <strong>{{ 'File saved as: ' . Session::get('file') }}</strong>
-        </div>
+        @if (Session::get('success'))
+            <div class="alert alert-success alert-block">
+                <strong>{{ Session::get('success') }}</strong>
+            </div>
         @endif
         @if (Session::get('failed'))
         <div class="alert alert-success alert-block">
             <strong>{{ Session::get('failed') }}</strong>
         </div>
+        @endif
+        @if (Session::get('error'))
+            <div class="alert alert-danger">
+                <strong>{{ Session::get('error') }}</strong>
+            </div>
         @endif
         @if (count($errors) > 0)
             <div class="alert alert-danger">

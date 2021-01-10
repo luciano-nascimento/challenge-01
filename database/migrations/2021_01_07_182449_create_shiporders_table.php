@@ -15,10 +15,7 @@ class CreateShipordersTable extends Migration
     {
         Schema::create('shiporders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
-            //avoid create relationship to persons table, because maybe we receive
-            //order first then person
-            $table->unsignedBigInteger('people_id');
+            $table->unsignedBigInteger('people_id')->unsigned();
             //address in same table because it has just one address
             $table->string('shipto_name', 60);
             $table->string('shipto_address', 100);
@@ -26,7 +23,8 @@ class CreateShipordersTable extends Migration
             $table->string('shipto_country', 30);
             $table->timestamps();
             $table->softDeletes();
-            $table->index(['order_id']);
+            $table->index(['id']);
+            $table->foreign('people_id')->references('id')->on('people');
         });
     }
 

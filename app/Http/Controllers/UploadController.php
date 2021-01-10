@@ -39,18 +39,25 @@ class UploadController extends Controller
         if ($request->hasFile('xmlfile')) {
             $xmlData = $request->file('xmlfile');
             $xmlDataContent = $xmlData->getContent();
-            $success = $this->uploadService->dispatchData($fileName, $xmlDataContent, $isAsyncUpload);            
-            $message = 'upload completed, but processing failed.';
-            if($success){
-                $message = 'upload completed !';
+            $success = $this->uploadService->dispatchData($fileName, $xmlDataContent, $isAsyncUpload);           
+
+            if($isAsyncUpload && $success){
+                return back()
+                    ->with('success', 'File sent to process queue successfuly.');
+            } else if($success){
+                return back()
+                    ->with('success', 'Upload completed successfuly.');
+            } else {
+                return back()
+                    ->with('error', 'Upload failed. Data already exists or there is some inconsistency with data. Maybe you uploaded a shiporder before person file.');
             }
+            
+        } else {
             return back()
-                ->with('success',$message)
-                ->with('file',$fileName);
+                ->with('failed','Invalid file.');
         }
 
-        return back()
-                ->with('failed','invalid file');
+        
 
         
     }

@@ -5,15 +5,20 @@ namespace App\Services;
 use App\Models\Shiporder;
 use App\Models\ShipItem;
 use App\Repositories\ShiporderRepository;
-use \App\Jobs\BusXMLParserDataProcessor;
+use App\Jobs\BusXMLParserDataProcessor;
+use App\Services\ShipItemService;
+use App\Repositories\ShipItemRepository;
+use Illuminate\Support\Facades\Log;
 
 class ShiporderService {
 
     private $shiporderRepository;
+    private $shipItemService;
 
     public function __construct(ShiporderRepository $shiporderRepository)
     {
         $this->shiporderRepository = $shiporderRepository;
+        $this->shipItemService =  new ShipItemService(new ShipItemRepository);
     }
 
     public function store($filename, $data, $isAsyncUpload = false)
@@ -27,39 +32,31 @@ class ShiporderService {
         return $success;
     }
 
-    function storeNonAsync($data) 
+    public function storeNonAsync($data) 
     {
         $success = false;
         foreach ($data as $shiporderData) {
-            $shiporder = new Shiporder;
-            $shiporder->order_id = $shiporderData['orderid'];
-            $shiporder->people_id = $shiporderData['orderperson'];
-            $shiporder->shipto_name = $shiporderData['shipto']['name'];
-            $shiporder->shipto_address = $shiporderData['shipto']['address'];
-            $shiporder->shipto_city = $shiporderData['shipto']['city'];
-            $shiporder->shipto_country = $shiporderData['shipto']['country'];
+            $shiporder = [
+                'id' => $shiporderData['orderid'],
+                'people_id' => $shiporderData['orderperson'],
+                'shipto_name' => $shiporderData['shipto']['name'],
+                'shipto_address' => $shiporderData['shipto']['address'],
+                'shipto_city' => $shiporderData['shipto']['city'],
+                'shipto_country' => $shiporderData['shipto']['country']
+            ];
+            
+            $shiporderSaved = $this->shiporderRepository->store($shiporder);
 
-            $shiporderSaveSuccess = $this->shiporderRepository->store($shiporder);
-        
+            if(!$shiporderSaved || !$shiporderSaved->wasRecentlyCreated) {
+                return false;
+            }
+
             $items = $shiporderData['items'];
             
-            if($shiporderSaveSuccess && (is_array($items) || is_object($items))){
-                //single data comes without index
-                if(isset($items['item']['title'])){
-                    $itemsData = [0 => $items['item']];
-                } else {
-                    $itemsData = $items['item'];
-                }
-
-                for($i=0;$i<count($itemsData);$i++) {
-                    $item = new ShipItem;                    
-                    $item->shiporder_id = $shiporder->id;
-                    $item->title = $itemsData[$i]["title"];
-                    $item->note = $itemsData[$i]['note'];
-                    $item->quantity = $itemsData[$i]['quantity'];
-                    $item->price = $itemsData[$i]['price']; 
-                    $success = $item->save();
-                }
+            if($shiporderSaved->wasRecentlyCreated && (is_array($items) || is_object($items))){
+                $success = $this->shipItemService->storeItems($items, $shiporderSaved->id);
+            } else {
+                Log::error('Wrong format for items data');
             }
         }
         return $success;
@@ -74,7 +71,7 @@ class ShiporderService {
             BusXMLParserDataProcessor::dispatch($folder.'/'.$fileName);
             $success = true;
         } else {
-            //log
+            Log::error('Can not store file to process asynchronously');
         }
         return $success;
     }

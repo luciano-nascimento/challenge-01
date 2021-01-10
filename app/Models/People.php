@@ -12,7 +12,7 @@ class People extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'people_id',
+        'id',
         'name',
     ];
 }

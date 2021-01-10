@@ -5,15 +5,19 @@ namespace App\Services;
 use App\Models\People;
 use App\Models\Phone;
 use App\Repositories\PeopleRepository;
-use \App\Jobs\BusXMLParserDataProcessor;
-
+use App\Jobs\BusXMLParserDataProcessor;
+use App\Services\PhoneService;
+use App\Repositories\PhoneRepository;
+use Illuminate\Support\Facades\Log;
 class PeopleService {
     
     private $peopleRepository;
+    private $phoneService;
 
     public function __construct(PeopleRepository $peopleRepository)
     {
         $this->peopleRepository = $peopleRepository;
+        $this->phoneService = new PhoneService(new PhoneRepository);
     }
 
     public function store($filename, $data, $isAsyncUpload = false)
@@ -31,28 +35,29 @@ class PeopleService {
     {
         $success = false;
         foreach ($data as $peopleData) {
-            $people_id = $peopleData['personid'];
-            $name = $peopleData['personname'];
-            $people = new People;
-            $people->people_id = $people_id;
-            $people->name = $name;
+            $people = [
+                'id' => $peopleData['personid'],
+                'name' => $peopleData['personname']
+            ];
+            
+            $savedData = $this->peopleRepository->store($people);
+            
+            if(!$savedData->wasRecentlyCreated) {
+                return false;
+            }
 
             $phones = $peopleData['phones']['phone'];
-
-            if ($people->save() && (is_array($phones) || is_object($phones))) {
-                foreach ($phones as $key => $phoneNumber) {
-                    $phone = new Phone;
-                    $phone->number = $phoneNumber;
-                    $phone->people_id = $people->id;
-                    $phone->save();
-                }
+            //dealing with data in array
+            if ($savedData->wasRecentlyCreated && (is_array($phones) || is_object($phones))) {
+                $success = $this->phoneService->storePhones($phones, $savedData->id);
             } else if($phones){
-                $phone = new Phone;
-                $phone->number = $phones;
-                $phone->people_id = $people->id;
-                $success = $phone->save();
+                $phone = [
+                    'number' => $phones,
+                    'people_id' => $savedData->id
+                ];
+                $success = $this->phoneService->store($phone);
             } else {
-                //todo logs
+                Log::error('Wrong format for phone data');
             }
         }
         return $success;
@@ -66,7 +71,7 @@ class PeopleService {
         if($success){
             BusXMLParserDataProcessor::dispatch($folder.'/'.$fileName);
         } else {
-            //log
+            Log::error('Can not save xml file to process later, async process failed.');
         }
         return $success;
     }

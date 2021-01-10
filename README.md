@@ -15,9 +15,14 @@ Challenge proposed by Invillia
 $ docker-compose up -d
 ```
 
+- run composer   
+```sh
+docker-compose exec app-php composer install
+```
+
 - then run migration   
 ```sh
-docker-compose exec app-php php artisan migrate
+$ docker-compose exec app-php php artisan migrate
 ```
 <br/>
 

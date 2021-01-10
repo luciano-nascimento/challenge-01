@@ -29,4 +29,14 @@ class PeopleRepository
             'name' => $people['name']
         ]);
     }
+
+    public function getAll()
+    {
+        return People::with('phone')->get();
+    }
+
+    public function getById($peopleId)
+    {
+        return People::with('phone')->find($peopleId);
+    }
 }

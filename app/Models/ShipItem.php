@@ -18,4 +18,9 @@ class ShipItem extends Model
         'quantity',
         'price'
     ];
+
+    public function shiporder()
+    {
+        return $this->belongsTo('App\Models\Shiporder');
+    }
 }

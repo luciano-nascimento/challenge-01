@@ -10,6 +10,12 @@ class Shiporder extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    
+    protected $hidden = [
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
 
     protected $fillable = [
         'id',
@@ -19,4 +25,9 @@ class Shiporder extends Model
         'shipto_city',
         'shipto_country'
     ];
+
+    public function shipItem()
+    {
+        return $this->hasMany('App\Models\ShipItem');
+    }
 }

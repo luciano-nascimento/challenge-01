@@ -9,6 +9,7 @@ use App\Jobs\BusXMLParserDataProcessor;
 use App\Services\ShipItemService;
 use App\Repositories\ShipItemRepository;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ShiporderService {
 
@@ -74,5 +75,18 @@ class ShiporderService {
             Log::error('Can not store file to process asynchronously');
         }
         return $success;
+    }
+
+    public function getAll()
+    {
+        return $this->shiporderRepository->getAll();
+    }
+
+    public function getById($shiporderId)
+    {
+        $validator = Validator::make(['shiporder_id' => $shiporderId], ['shiporder_id' => 'numeric|required']);
+        
+        $data =  $this->shiporderRepository->getById($shiporderId);
+        return ['data' => $data ?? '', 'message' => $validator->fails() ? $validator->errors() : '']; 
     }
 }

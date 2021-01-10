@@ -43,4 +43,14 @@ class ShiporderRepository
 
         return false;
     }
+
+    public function getAll()
+    {
+        return Shiporder::with('shipItem')->get();
+    }
+
+    public function getById($shiporderId)
+    {
+        return Shiporder::with('shipItem')->find($shiporderId);
+    }
 }

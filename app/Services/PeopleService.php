@@ -9,6 +9,7 @@ use App\Jobs\BusXMLParserDataProcessor;
 use App\Services\PhoneService;
 use App\Repositories\PhoneRepository;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 class PeopleService {
     
     private $peopleRepository;
@@ -74,5 +75,17 @@ class PeopleService {
             Log::error('Can not save xml file to process later, async process failed.');
         }
         return $success;
+    }
+
+    public function getAll()
+    {
+        return $this->peopleRepository->getAll();
+    }
+
+    public function getById($peopleId)
+    {
+        $validator = Validator::make(['shiporder_id' => $peopleId], ['shiporder_id' => 'numeric|required']);
+        $this->peopleRepository->getById($peopleId);
+        return ['data' => $data ?? '', 'message' => $validator->fails() ? $validator->errors() : ''];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\People;
 use App\Models\Phone;
 use App\Repositories\PeopleRepository;
-use App\Jobs\BusXMLParserDataProcessor;
+use App\Jobs\XMLParserDataProcessor;
 use App\Services\PhoneService;
 use App\Repositories\PhoneRepository;
 use Illuminate\Support\Facades\Log;
@@ -70,7 +70,7 @@ class PeopleService {
         $folder = Config('constants.xml_paths.people_xml_file_path');
         $success = $this->peopleRepository->storeFile($data, $fileName);
         if($success){
-            BusXMLParserDataProcessor::dispatch($folder.'/'.$fileName);
+            XMLParserDataProcessor::dispatch($folder.'/'.$fileName);
         } else {
             Log::error('Can not save xml file to process later, async process failed.');
         }

@@ -21,7 +21,7 @@ use App\Models\People;
 use App\Strategies\XMLStore\XMLStoreShiporder;
 use App\Strategies\XMLStore\XMLStorePeople;
 
-class BusXMLParserDataProcessor implements ShouldQueue
+class XMLParserDataProcessor implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     

@@ -4,7 +4,8 @@
 /storage/*.key
 /storage/app/temp-bus-xml-files
 /vendor
-.env
+coverage-report.xml
+supervisord.pid
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml
@@ -14,3 +15,4 @@ npm-debug.log
 yarn-error.log
 supervisord.log
 supervisord.pid
+tests-report.xml

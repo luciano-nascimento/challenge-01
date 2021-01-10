@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Shiporder;
 use App\Models\ShipItem;
 use App\Repositories\ShiporderRepository;
-use App\Jobs\BusXMLParserDataProcessor;
+use App\Jobs\XMLParserDataProcessor;
 use App\Services\ShipItemService;
 use App\Repositories\ShipItemRepository;
 use Illuminate\Support\Facades\Log;
@@ -69,7 +69,7 @@ class ShiporderService {
         $folder = Config('constants.xml_paths.shiporder_xml_file_path');
         $success = $this->shiporderRepository->storeFile($data, $fileName);
         if($success){
-            BusXMLParserDataProcessor::dispatch($folder.'/'.$fileName);
+            XMLParserDataProcessor::dispatch($folder.'/'.$fileName);
             $success = true;
         } else {
             Log::error('Can not store file to process asynchronously');

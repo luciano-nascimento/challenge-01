@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img width="500" height="150" src="logo.png">
+  <img width="500" height="150" src="documentation/logo.png">
 </p>
 <br/>
 
@@ -35,5 +35,6 @@ http://localhost:8001/api/documentation
 
 # Decisions
 
-- considering that the requirements did not say whether the files would be inserted in a specific order, I chose not to create relationship to the shiporder and people tables   
-- considering that there could be a large volume of data I opted to index some fields of the bank
+- I kept the .env files in github repo just to  make run easy, even it's not a good practice  
+- considering that it could be a large volume of data I opted to index some fields of the bank
+- xml data could be processed async or sync

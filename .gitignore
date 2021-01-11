@@ -16,3 +16,5 @@ yarn-error.log
 supervisord.log
 supervisord.pid
 tests-report.xml
+coverage-report.xml
+tests-report.xml

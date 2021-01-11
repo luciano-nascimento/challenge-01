@@ -22,7 +22,7 @@ docker-compose exec app-php composer install
 
 - then run migration   
 ```sh
-$ docker-compose exec app-php php artisan migrate
+$ docker-compose exec app-php php artisan migrate --seed
 ```
 <br/>
 
@@ -37,6 +37,22 @@ docker-compose exec app-php php artisan test --env=testing
 
 http://localhost:8001/api/documentation
 <br/>
+
+*
+
+# API use
+-DEFAUL LOGIN/PASSWORD is 
+  {
+	  "email":"admin@admin.com",
+	  "password": "12345678"
+  }
+
+-insomnia file should be find in "documentation" folder, to make easier the use of api
+-use login route to get your token, passing email and password (could use the default one)
+-now make your request using your token on token field
+{
+"token":"<your token here>"
+}
 
 # Decisions
 

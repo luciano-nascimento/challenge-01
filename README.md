@@ -45,3 +45,4 @@ http://localhost:8001/api/documentation
 - considering the challenge description I kept the id to database because it's not clear if files come from different systems
 - considering that it could be a large volume of data I opted to index some fields of the bank
 - xml data could be processed async or sync
+- if data upload with already exist id with different data, it will be updated

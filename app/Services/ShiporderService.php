@@ -45,16 +45,18 @@ class ShiporderService {
                 'shipto_city' => $shiporderData['shipto']['city'],
                 'shipto_country' => $shiporderData['shipto']['country']
             ];
-            
+    
             $shiporderSaved = $this->shiporderRepository->store($shiporder);
-
-            if(!$shiporderSaved || !$shiporderSaved->wasRecentlyCreated) {
+            
+            if(!$shiporderSaved) {
                 return false;
             }
 
             $items = $shiporderData['items'];
             
-            if($shiporderSaved->wasRecentlyCreated && (is_array($items) || is_object($items))){
+            if($shiporderSaved && (is_array($items) || is_object($items))){
+                //clear ship item data just in update case
+                $this->shipItemService->deleteByShipOrderId($shiporderSaved->id);
                 $success = $this->shipItemService->storeItems($items, $shiporderSaved->id);
             } else {
                 Log::error('Wrong format for items data');

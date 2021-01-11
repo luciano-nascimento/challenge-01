@@ -42,20 +42,22 @@ class PeopleService {
             ];
             
             $savedData = $this->peopleRepository->store($people);
-            
-            if(!$savedData->wasRecentlyCreated) {
+
+            if(!$savedData) {
                 return false;
             }
 
             $phones = $peopleData['phones']['phone'];
             //dealing with data in array
-            if ($savedData->wasRecentlyCreated && (is_array($phones) || is_object($phones))) {
+            if ($savedData && (is_array($phones) || is_object($phones))) {
                 $success = $this->phoneService->storePhones($phones, $savedData->id);
             } else if($phones){
                 $phone = [
                     'number' => $phones,
                     'people_id' => $savedData->id
                 ];
+                //clear previous phone just in update case
+                $this->phoneService->deleteByPeopleId($savedData->id);
                 $success = $this->phoneService->store($phone);
             } else {
                 Log::error('Wrong format for phone data');

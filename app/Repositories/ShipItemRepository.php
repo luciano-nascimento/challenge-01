@@ -16,4 +16,9 @@ class ShipItemRepository
             'price' => $data['price'],
         ]);
     }
+
+    public function deleteByShipOrderId($shipOrderId)
+    {
+        return ShipItem::where('shiporder_id', '=', $shipOrderId)->delete();
+    }
 }

@@ -20,6 +20,8 @@ class PhoneService
     public function storePhones($phones, $peopleId)
     { 
         $success = true;
+        //clear phones before just in case its a updating
+        $this->deleteByPeopleId($peopleId);
         foreach ($phones as $phoneNumber) {
             $phone = [
                 'number' => $phoneNumber,
@@ -28,5 +30,10 @@ class PhoneService
             $this->store($phone) ? $success = true : $success = false;
         }
         return $success;
+    }
+
+    public function deleteByPeopleId($peopleId)
+    {
+        return $this->phoneRepository->deleteByPeopleId($peopleId);
     }
 }

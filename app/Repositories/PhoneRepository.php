@@ -13,4 +13,9 @@ class PhoneRepository
             'people_id' => $phone['people_id']
         ]);       
     }
+
+    public function deleteByPeopleId($peopleId)
+    {
+        return Phone::where('people_id', '=', $peopleId)->delete();
+    }
 }

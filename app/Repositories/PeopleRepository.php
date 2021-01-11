@@ -24,10 +24,15 @@ class PeopleRepository
 
     function store($people) 
     {
-        return People::firstOrcreate([
-            'id' => $people['id'],
-            'name' => $people['name']
-        ]);
+        return People::updateOrCreate(
+            [
+                'id' => $people['id']
+            ],
+            [
+                'id' => $people['id'],
+                'name' => $people['name'],
+            ]
+        );
     }
 
     public function getAll()

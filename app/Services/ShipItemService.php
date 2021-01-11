@@ -44,4 +44,9 @@ class ShipItemService
         }
         return $success;
     }
+
+    public function deleteByShipOrderId($shiporder)
+    {
+        return $this->shipItemRepository->deleteByShipOrderId($shiporder);
+    }
 }

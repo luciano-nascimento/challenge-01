@@ -31,26 +31,23 @@ services:
       - "4043:443"
     volumes:
       - ./:/var/www
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/  
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
 
   #MySQL Service
   database:
-    image: mysql:5.7.22
+    image: mysql:5.7
     container_name: database
     restart: always
     tty: true
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: invillia_challenge
       MYSQL_ROOT_PASSWORD: challenge
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
     volumes:
-      - dbdata:/var/lib/mysql 
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf 
+      - dbdata:/var/lib/mysql
     networks:
       - app-network
 

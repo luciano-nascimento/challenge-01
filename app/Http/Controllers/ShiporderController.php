@@ -16,7 +16,7 @@ class ShiporderController extends Controller
     }
 
     /**
-     * @OA\Get(path="/api/shiporder",tags={"Shiporder"}, summary="Return shiporder data",operationId="getAll", 
+     * @OA\Get(path="/api/shiporder",tags={"Shiporder"}, summary="Return shiporder data",operationId="getAll", security={{"default": {}}},
      *   @OA\Response(response=200,description="Success",content={
      *      @OA\MediaType(mediaType="application/json",
      *          @OA\Schema(
@@ -60,7 +60,7 @@ class ShiporderController extends Controller
     }
 
     /**
-     * @OA\Get(path="/api/shiporder/{shiporderId}",tags={"Shiporder"}, summary="Return shiporder data by id",operationId="getById",
+     * @OA\Get(path="/api/shiporder/{shiporderId}",tags={"Shiporder"}, summary="Return shiporder data by id",operationId="getById", security={{"default": {}}},
      *   @OA\Parameter(name="shiporderId", description=" shiporder id", required=true, in="path", @OA\Schema(type="integer")), 
      *   @OA\Response(response=200,description="Success",content={
      *      @OA\MediaType(mediaType="application/json",

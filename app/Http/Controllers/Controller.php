@@ -9,6 +9,14 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(title="Invillia challenge API", version="0.1")
+ *
+ * @OA\SecurityScheme(
+*           securityScheme="default",
+ *          type="apiKey",
+ *          in="header",
+ *          name="Authorization"
+ * )
+ *
  */
 class Controller extends BaseController
 {

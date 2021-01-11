@@ -7,6 +7,9 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected $routeMiddleware = [
+        'swfix' => \App\Http\Middleware\SwaggerFix::class,
+    ];
     /**
      * The Artisan commands provided by your application.
      *

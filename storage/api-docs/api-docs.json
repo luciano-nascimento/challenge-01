@@ -56,7 +56,12 @@
                     "401": {
                         "description": "Unauthenticated"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
             }
         },
         "/api/people/{peopleId}": {
@@ -147,7 +152,12 @@
                     "401": {
                         "description": "Unauthenticated"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
             }
         },
         "/api/shiporder": {
@@ -250,7 +260,12 @@
                     "401": {
                         "description": "Unauthenticated"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
             }
         },
         "/api/shiporder/{shiporderId}": {
@@ -390,11 +405,32 @@
                     "401": {
                         "description": "Unauthenticated"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
             }
         }
     },
-    "security": [
-        []
-    ]
+    "components": {
+        "securitySchemes": {
+            "default": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": {
+        "bearer": {
+            "type": "http",
+            "description": "Authorization token obtained from logging in.",
+            "name": "Authorization",
+            "in": "header",
+            "scheme": "bearer"
+        },
+        "0": []
+    }
 }

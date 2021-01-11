@@ -15,7 +15,7 @@ class PeopleController extends Controller
     }
 
     /**
-     * @OA\Get(path="/api/people",tags={"People"}, summary="Return people data",operationId="getAll", 
+     * @OA\Get(path="/api/people",tags={"People"}, summary="Return people data", security={{"default": {}}}, operationId="getAll", 
      *   @OA\Response(response=200,description="Success",content={
      *      @OA\MediaType(mediaType="application/json",
      *          @OA\Schema(
@@ -47,7 +47,7 @@ class PeopleController extends Controller
     }
 
     /**
-     * @OA\Get(path="/api/people/{peopleId}",tags={"People"}, summary="Return people data by id",operationId="getById",
+     * @OA\Get(path="/api/people/{peopleId}",tags={"People"}, summary="Return people data by id", security={{"default": {}}}, operationId="getById",
      *   @OA\Parameter(name="peopleId", description=" people id", required=true, in="path", @OA\Schema(type="integer")), 
      *   @OA\Response(response=200,description="Success",content={
      *      @OA\MediaType(mediaType="application/json",

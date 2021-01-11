@@ -48,6 +48,7 @@ http://localhost:8001/api/documentation
   }
 
 -insomnia file should be find in "documentation" folder, to make easier the use of api
+-first certify that you already load some xml file
 -use login route to get your token, passing email and password (could use the default one)
 -now make your request using your token on token field
 {

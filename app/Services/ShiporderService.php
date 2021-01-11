@@ -24,11 +24,14 @@ class ShiporderService {
 
     public function store($filename, $data, $isAsyncUpload = false)
     {
-        $success = false;
-        if($isAsyncUpload) {
-            $success = $this->storeAsync($data, $filename);
-        } else {
-            $success = $this->storeNonAsync(convertXMLDataTypeToArray($data));
+        $success = $this->validateXMLData(convertXMLDataTypeToArray($data));
+        
+        if($success){
+            if($isAsyncUpload) {
+                $success = $this->storeAsync($data, $filename);
+            } else {
+                $success = $this->storeNonAsync(convertXMLDataTypeToArray($data));
+            }
         }
         return $success;
     }
@@ -91,4 +94,60 @@ class ShiporderService {
         $data =  $this->shiporderRepository->getById($shiporderId);
         return ['data' => $data ?? '', 'message' => $validator->fails() ? $validator->errors() : '']; 
     }
+
+    public function validateXMLData($data) 
+    {
+        $valid = true;
+        $ruleStringRequired = 'string|required';
+        foreach ($data as $shiporderData) {
+            $shiporderValidator = Validator::make(
+                [
+                    'id' => $shiporderData['orderid'],
+                    'people_id' => $shiporderData['orderperson'],
+                    'shipto_name' => $shiporderData['shipto']['name'],
+                    'shipto_address' => $shiporderData['shipto']['address'],
+                    'shipto_city' => $shiporderData['shipto']['city'],
+                    'shipto_country' => $shiporderData['shipto']['country']
+                ],
+                [
+                    'id' => 'numeric|required',
+                    'people_id' => 'numeric|required',
+                    'shipto_name' => $ruleStringRequired,
+                    'shipto_address' => $ruleStringRequired,
+                    'shipto_city' => $ruleStringRequired,
+                    'shipto_country' => $ruleStringRequired
+                ]
+            );
+
+            if($shiporderValidator->fails()){$valid=false;}
+            $items = $shiporderData['items'];
+            
+            if (is_array($items) || is_object($items)) {
+
+                //single data comes without index
+                if(isset($items['item']['title'])){
+                    $items = [0 => $items['item']];
+                }
+                else {
+                    $items = $items['item'];
+                }
+
+                for($i=0;$i<count($items);$i++) {
+
+                    $shipItemValidator = Validator::make(
+                        [
+                            'quantity' => $items[$i]['quantity'],
+                            'price' => $items[$i]['price'],
+                        ],
+                        [
+                            'quantity' => 'numeric|required',
+                            'price' => 'numeric|required',
+                        ]
+                    );
+                    if($shipItemValidator->fails()){$valid=false;}
+                }
+            }
+        }
+        return $valid;
+    }    
 }

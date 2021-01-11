@@ -23,12 +23,16 @@ class PeopleService {
 
     public function store($filename, $data, $isAsyncUpload = false)
     {
-        $success = false;
-        if($isAsyncUpload) {
-            $success = $this->storeAsync($data, $filename);
-        } else {
-            $success = $this->storeNonAsync(convertXMLDataTypeToArray($data));
+        $success = $this->validateXMLData(convertXMLDataTypeToArray($data));
+        
+        if($success){
+            if($isAsyncUpload) {
+                $success = $this->storeAsync($data, $filename);
+            } else {
+                $success = $this->storeNonAsync(convertXMLDataTypeToArray($data));
+            }
         }
+        
         return $success;
     }
 
@@ -89,5 +93,26 @@ class PeopleService {
         $validator = Validator::make(['shiporder_id' => $peopleId], ['shiporder_id' => 'numeric|required']);
         $data = $this->peopleRepository->getById($peopleId);
         return ['data' => $data ?? '', 'message' => $validator->fails() ? $validator->errors() : ''];
+    }
+
+    public function validateXMLData($data) 
+    {
+        $valid = true;
+        foreach ($data as $peopleData) {
+
+            $peopleValidator = Validator::make(
+                [
+                    'id' => $peopleData['personid'],
+                    'name' => $peopleData['personname']
+                ],
+                [
+                    'id' => 'numeric|required',
+                    'name' => 'string|required'
+                ]
+            );
+            if($peopleValidator->fails()){$valid=false;}
+        }
+
+        return $valid;
     }
 }

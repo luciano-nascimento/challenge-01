@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.123850">
-    <testsuite name="Unit" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.001753">
-      <testsuite name="Tests\Unit\ExampleTest" file="/home/ks2065/Desktop/invillia-challenge/tests/Unit/ExampleTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.001753">
-        <testcase name="testBasicTest" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" file="/home/ks2065/Desktop/invillia-challenge/tests/Unit/ExampleTest.php" line="14" assertions="1" time="0.001753"/>
+  <testsuite name="" tests="6" assertions="6" errors="0" warnings="0" failures="0" skipped="0" time="0.793393">
+    <testsuite name="Unit" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.002609">
+      <testsuite name="Tests\Unit\HelperTest" file="/home/ks2065/Desktop/challenge-01/tests/Unit/HelperTest.php" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.002609">
+        <testcase name="test_should_retrieve_data_type" class="Tests\Unit\HelperTest" classname="Tests.Unit.HelperTest" file="/home/ks2065/Desktop/challenge-01/tests/Unit/HelperTest.php" line="29" assertions="1" time="0.001860"/>
+        <testcase name="test_should_parse_xml_data_to_array" class="Tests\Unit\HelperTest" classname="Tests.Unit.HelperTest" file="/home/ks2065/Desktop/challenge-01/tests/Unit/HelperTest.php" line="35" assertions="1" time="0.000749"/>
       </testsuite>
     </testsuite>
-    <testsuite name="Feature" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.122098">
-      <testsuite name="Tests\Feature\ExampleTest" file="/home/ks2065/Desktop/invillia-challenge/tests/Feature/ExampleTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.122098">
-        <testcase name="testBasicTest" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" file="/home/ks2065/Desktop/invillia-challenge/tests/Feature/ExampleTest.php" line="15" assertions="1" time="0.122098"/>
+    <testsuite name="Feature" tests="4" assertions="4" errors="0" warnings="0" failures="0" skipped="0" time="0.790783">
+      <testsuite name="Tests\Feature\PeopleTest" file="/home/ks2065/Desktop/challenge-01/tests/Feature/PeopleTest.php" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.450284">
+        <testcase name="test_should_return_200_for_people_route" class="Tests\Feature\PeopleTest" classname="Tests.Feature.PeopleTest" file="/home/ks2065/Desktop/challenge-01/tests/Feature/PeopleTest.php" line="20" assertions="1" time="0.274589"/>
+        <testcase name="test_should_return_four_objects_for_people_route" class="Tests\Feature\PeopleTest" classname="Tests.Feature.PeopleTest" file="/home/ks2065/Desktop/challenge-01/tests/Feature/PeopleTest.php" line="26" assertions="1" time="0.175695"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\ShiporderTest" file="/home/ks2065/Desktop/challenge-01/tests/Feature/ShiporderTest.php" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.340500">
+        <testcase name="test_should_return_200_for_shiporder_route" class="Tests\Feature\ShiporderTest" classname="Tests.Feature.ShiporderTest" file="/home/ks2065/Desktop/challenge-01/tests/Feature/ShiporderTest.php" line="20" assertions="1" time="0.173949"/>
+        <testcase name="test_should_return_one_object_for_shiporder_route" class="Tests\Feature\ShiporderTest" classname="Tests.Feature.ShiporderTest" file="/home/ks2065/Desktop/challenge-01/tests/Feature/ShiporderTest.php" line="26" assertions="1" time="0.166550"/>
       </testsuite>
     </testsuite>
   </testsuite>

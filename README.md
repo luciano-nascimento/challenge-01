@@ -55,6 +55,7 @@ http://localhost:8001/api/documentation
 }
 
 <br/>
+
 # Decisions
 
 * I kept the .env files in github repo just to  make run easy, even it's not a good practice   

@@ -36,6 +36,7 @@ docker-compose exec app-php php artisan test --env=testing
 # API documentation
 
 http://localhost:8001/api/documentation
+*to make requests from here don't forget to put "bearer <token_here>"
 
 <br/>
 

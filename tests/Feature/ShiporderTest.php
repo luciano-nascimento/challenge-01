@@ -3,15 +3,15 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\People;
 use App\Models\Shiporder;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ShiporderTest extends TestCase
 {
-    use WithFaker, DatabaseMigrations, RefreshDatabase;
+    use WithFaker, DatabaseMigrations, WithoutMiddleware;
     /**
      * A basic feature test example.
      *

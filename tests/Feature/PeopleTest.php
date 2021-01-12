@@ -2,16 +2,21 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\People;
+use Laracasts\TestDummy\Factory;
+use Laracasts\TestDummy\DbTestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PeopleTest extends TestCase
 {
-    use WithFaker, DatabaseMigrations, RefreshDatabase;
+    use WithFaker, WithoutMiddleware;
+    
+
     /**
      * A basic feature test example.
      *
@@ -31,4 +36,6 @@ class PeopleTest extends TestCase
         $response = $this->get('/api/people');
         $response->assertJsonCount(4, 'data');
     }
+
+    
 }
